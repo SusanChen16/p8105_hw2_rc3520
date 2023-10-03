@@ -1,0 +1,12 @@
+---
+title: "p8105_hw2_rc3520.Rmd"
+author: "Ruyi Chen"
+date: "2023-10-03"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
