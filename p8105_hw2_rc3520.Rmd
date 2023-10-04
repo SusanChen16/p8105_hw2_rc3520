@@ -194,8 +194,9 @@ After importing the data with read_csv, I tidy the variable names by using janit
 ##Combine the demographic and biomarker datasets 
 ```{r}
 mci_baseline_amyloid = 
-  inner_join(mci_baseline_df, mci_amyloid)
-mci_baseline_amyloid
+  inner_join(mci_baseline_df, mci_amyloid) 
+#export the result as a CSV to your data directory.
+write_csv(mci_baseline_amyloid, "./data/baseline_amyloid.csv")
 ```
 ##Description:
 By applying inner join, I keep participants who exist on both demographic and biomarker datasets. There are `r nrow(mci_baseline_amyloid)` numbers of participants who appear on both datasets. Since there are `r nrow(mci_amyloid)-nrow(mci_baseline_df)` more participants in biomarker datasets than participants in demographic datasets, some participants appear in only the baseline or amyloid datasets. Among these `r nrow(mci_baseline_amyloid)` participants, `r nrow(filter(mci_baseline_amyloid, apoe4=="Carrier")) ` are carriers which 
