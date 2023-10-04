@@ -80,7 +80,7 @@ pols_snp_unemployment_df shows the number of republic / democratic presidents an
 #Problem 2
 ##clean the Mr. Trash Wheel sheet
 ```{r}
-Mr_trash_wheel = read_excel("./data/202309 Trash Wheel Collection Data.xlsx",
+mr_trash_wheel = read_excel("./data/202309 Trash Wheel Collection Data.xlsx",
                      sheet = "Mr. Trash Wheel",
                      range=cell_cols("A:N")) %>%
   janitor::clean_names() %>%
@@ -90,9 +90,18 @@ Mr_trash_wheel = read_excel("./data/202309 Trash Wheel Collection Data.xlsx",
     year = as.numeric(year), 
     dumpster = as.numeric(dumpster), 
     homes_powered = as.integer(round(homes_powered, digits = 0))) 
-
-Mr_data
+mr_trash_wheel
 ```
 
+##import, clean, and organize the data for Professor Trash Wheel
+```{r}
+professor_trash_wheel = read_excel("./data/202309 Trash Wheel Collection Data.xlsx",
+                                   sheet = "Professor Trash Wheel")%>%
+                        janitor::clean_names() %>%
+                        drop_na(dumpster) %>%
+                        mutate(homes_powered = as.integer(round(homes_powered, digits = 0)),
+                          year=as.integer(year))
+professor_trash_wheel
+```
 
 
