@@ -18,7 +18,7 @@ library(readr)
 ### Use separate() to break up the variable mon into integer variables year, month, and day; replace month number with month name; create a president variable taking values gop and dem, and remove prez_dem and prez_gop; and remove the day variable.
 ```{r eval=FALSE}
  pols_month_df= 
-  read_csv("./fivethirtyeight_datasets/pols-month.csv") %>%
+  read_csv("./data/pols-month.csv") %>%
   janitor::clean_names() %>%
   separate(col = mon,into = c("year","month","day"),sep = '-', convert = TRUE) %>%
   mutate(
@@ -35,7 +35,7 @@ pols_month_df
 ## Clean the data in snp.csv using a similar process to the above. For consistency across datasets, arrange according to year and month, and organize so that year and month are the leading columns.
 ```{r eval = False}
 snp_df=
-    read_csv("./fivethirtyeight_datasets/snp.csv") %>%
+    read_csv("./data/snp.csv") %>%
     drop_na() %>%
     janitor::clean_names() %>%
     separate(date, into  = c("month", "day", "year")) %>%
@@ -52,7 +52,7 @@ snp_df
 ##Third, tidy the unemployment data so that it can be merged with the previous datasets. This process will involve switching from “wide” to “long” format; ensuring that key variables have the same name; and ensuring that key variables take the same values.
 ```{r eval = False}
 unemployment_df=
-    read_csv("./fivethirtyeight_datasets/unemployment.csv",
+    read_csv("./data/unemployment.csv",
              col_names = TRUE,
               show_col_types = FALSE) %>%
     janitor::clean_names() %>%
@@ -76,4 +76,23 @@ These data describe whether the policians are democratic or republican between 1
 snp_df includes 787 observations and 3 variables including year, month and close. They describe the closing values of S&P stock index from between 1950 and 2015.
 unemployment_df includes 804 observations and 3 variables including year, month and unemployment_rate.  It shows the unemployment rate in each month between 1948 and 2014.
 pols_snp_unemployment_df shows the number of republic / democratic presidents and number of governors/ senators/ representatives from 1947 to 2015. It also shows the closing values of the S&P stock index between 1950 and 2015 and unemployment rate between Jan/1948 to Jun/2014.
+
+#Problem 2
+##clean the Mr. Trash Wheel sheet
+```{r}
+Mr_trash_wheel = read_excel("./data/202309 Trash Wheel Collection Data.xlsx",
+                     sheet = "Mr. Trash Wheel",
+                     range=cell_cols("A:N")) %>%
+  janitor::clean_names() %>%
+  drop_na() %>%
+  mutate(
+    sports_balls = as.integer(round(sports_balls)), 
+    year = as.numeric(year), 
+    dumpster = as.numeric(dumpster), 
+    homes_powered = as.integer(round(homes_powered, digits = 0))) 
+
+Mr_data
+```
+
+
 
