@@ -89,8 +89,9 @@ mr_trash_wheel = read_excel("./data/202309 Trash Wheel Collection Data.xlsx",
     sports_balls = as.integer(round(sports_balls)), 
     year = as.integer(year), 
     dumpster = as.numeric(dumpster), 
-    homes_powered = as.integer(round(homes_powered, digits = 0)),
+    homes_powered = (weight_tons * (500/30)),
     catg = "mr trash wheel") %>%
+    # Create a variable catg to help with the combination of the datasets
   select(catg, everything())
 mr_trash_wheel
 ```
@@ -101,11 +102,18 @@ professor_trash_wheel = read_excel("./data/202309 Trash Wheel Collection Data.xl
                                    sheet = "Professor Trash Wheel")%>%
                         janitor::clean_names() %>%
                         drop_na(dumpster) %>%
-                        mutate(homes_powered = as.integer(round(homes_powered, digits = 0)),
+                        mutate(homes_powered = (weight_tons * (500/30)),
                           year=as.integer(year),
                           catg = "prof trash wheel") %>%
+  # Create a variable catg to help with the combination of the datasets
   select(catg, everything())
 professor_trash_wheel
+```
+## calculate total weight of trash collected by Professor Trash Wheel
+```{r}
+professor_trash_wheel %>%
+  select(weight_tons) %>%
+  colSums()
 ```
 
 ##import, clean, and organize the data for Gwynnda
@@ -114,11 +122,21 @@ gwynnda = read_excel("./data/202309 Trash Wheel Collection Data.xlsx",
                                    sheet = "Gwynnda Trash Wheel")%>%
                         janitor::clean_names() %>%
                         drop_na(dumpster) %>%
-                        mutate(homes_powered = as.integer(round(homes_powered, digits = 0)),
+                        mutate(homes_powered = (weight_tons * (500/30)),
+                          cigarette_butts = as.integer(cigarette_butts),
                           year=as.integer(year),
                           catg = "gwynnda trash wheel") %>%
+    # Create a variable catg to help with the combination of the datasets
   select(catg, everything())
 gwynnda
+```
+
+##Calculate The total number of cigarette butts collected by Gwynnda in July of 2021
+```{r}
+gwynnda %>%
+  filter(year == "2021",month == "July")%>%
+  select(cigarette_butts)%>%
+  colSums()
 ```
 
 ##Combine these there data to produce a single tidy dataset
@@ -129,3 +147,14 @@ mr_prof_gwynnda_trash_wheel= left_join(mr_prof_trash_wheel,gwynnda , by = c("dum
 mr_prof_gwynnda_trash_wheel
 ```
 
+##Description about the datasets
+mr_trash_wheel includes 584 observations and 9 variables.
+professor_trash_wheel includes 106 observations and 14 variables.
+The total weight of trash collected by Professor Trash Wheel is `r professor_trash_wheel %>%
+  select(weight_tons) %>%
+  colSums()` tons.
+gwynnda includes 155 observations and 13 variables.
+The total number of cigarette butts collected by Gwynnda in July of 2021 is `r gwynnda %>%
+  filter(year == "2021",month == "July")%>%
+  select(cigarette_butts)%>%
+  colSums()`
