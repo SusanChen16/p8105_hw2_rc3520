@@ -32,3 +32,21 @@ library(readr)
 pols_month_df
 ```
 
+## Clean the data in snp.csv using a similar process to the above. For consistency across datasets, arrange according to year and month, and organize so that year and month are the leading columns.
+```{r eval = False}
+snp_df=
+    read_csv("./fivethirtyeight_datasets/snp.csv") %>%
+    drop_na() %>%
+    janitor::clean_names() %>%
+    separate(date, into  = c("month", "day", "year")) %>%
+  mutate(year = as.integer(year), 
+         year=ifelse(year<23, year+2000, year+1900),
+         month = as.integer(month), 
+         month = month.abb[month],
+         day = as.integer(day)) %>%
+  select(year,month,close,-day) %>%
+  arrange(year,month) 
+snp_df
+
+```
+
