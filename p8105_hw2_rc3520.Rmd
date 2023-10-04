@@ -189,7 +189,7 @@ mci_amyloid =
 mci_amyloid
 ```
 ##Description:
-After importing the data with read_csv, I tidy the variable names by using janitor::clean_names and deleting the first line(description on the variables) by using skip. I also use rename to change the column name "study_id" to "id" so that it can be further match to the column name in mci_baseline.There are `r nrow(mci_amyloid)` people enrolled in this study.
+After importing the data with read_csv, I tidy the variable names by using janitor::clean_names and deleting the first line(description on the variables) by using skip. I also use rename to change the column name "study_id" to "id" so that it can be further match to the column name in mci_baseline.There are `r nrow(mci_amyloid)` people enrolled in this study. There are `r ncol(mci_amyloid)` vairables including id and biomarker measurement recorded at baseline,time_2, time_4, time_6 and time_8.
 
 ##Combine the demographic and biomarker datasets 
 ```{r}
