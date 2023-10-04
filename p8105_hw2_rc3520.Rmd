@@ -167,8 +167,21 @@ mci_baseline =
   janitor::clean_names() %>%
   mutate(
     sex = case_match(sex, 1 ~ "Male",0 ~ "Female"),
-    apoe4 = case_match(apoe4, 1 ~ "Carrier", 0 ~ "Non_carrier")) %>% 
-  filter(is.na(age_at_onset)|age_at_onset>current_age)
-mci_baseline
+    apoe4 = case_match(apoe4, 1 ~ "Carrier", 0 ~ "Non_carrier")) 
+
+mci_baseline_df = filter(mci_baseline, age_at_onset == "." | age_at_onset > current_age)
+mci_baseline_df
+```
+##Discussion on the dataframe mci_baseline
+After importing the data, I tidy the variable names by using 'janitor::clean_names' and deleting the first line(description on the variables) by using 'skip'.Then, I make sure that sex and APOE4 carrier status are appropriately encoded by using 'mutate' so that 1 and 0 will be "Male" and "Female" under sex and will be "Carrier" and "Non_carrier" under apoes. And I also use 'filter' and generate the dataframe 'mci_baseline_df' to represent the data that meets the stated inclusion criteria, either missing `age_at_onset` value or `age_at_onset` is larger than `current_age` at baseline.
+### `r nrow(mci_baseline)` numbers of patients were recruited.
+### `Of these `r nrow(mci_baseline_df)` developed MCI.
+### Average baseline age is `r mean(as.numeric(filter(mci_baseline_df, age_at_onset != ".")$current_age))`.
+### `r nrow(filter(mci_baseline_df, sex=="Female"& apoe4=="Carrier")) / nrow(filter(mci_baseline, sex== "Female")) * 100` % of women in the study are APOE4 carriers.
+
+
+
+```{r}
+
 ```
 
