@@ -191,3 +191,13 @@ mci_amyloid
 ##Description:
 After importing the data with read_csv, I tidy the variable names by using janitor::clean_names and deleting the first line(description on the variables) by using skip. I also use rename to change the column name "study_id" to "id" so that it can be further match to the column name in mci_baseline.There are `r nrow(mci_amyloid)` people enrolled in this study.
 
+##Combine the demographic and biomarker datasets 
+```{r}
+mci_baseline_amyloid = 
+  inner_join(mci_baseline_df, mci_amyloid)
+mci_baseline_amyloid
+```
+##Description:
+By applying inner join, I keep participants who exist on both demographic and biomarker datasets. There are `r nrow(mci_baseline_amyloid)` numbers of participants who appear on both datasets. Since there are `r nrow(mci_amyloid)-nrow(mci_baseline_df)` more participants in biomarker datasets than participants in demographic datasets, some participants appear in only the baseline or amyloid datasets. Among these `r nrow(mci_baseline_amyloid)` participants, `r nrow(filter(mci_baseline_amyloid, apoe4=="Carrier")) ` are carriers which 
+`r nrow(filter(mci_baseline_amyloid, sex=="Female"& apoe4=="Carrier")) / nrow(filter(mci_baseline_amyloid, apoe4=="Carrier")) * 100` % of them are females and `r nrow(filter(mci_baseline_amyloid, sex=="Male"& apoe4=="Carrier")) / nrow(filter(mci_baseline_amyloid, apoe4=="Carrier")) * 100` % of them are males; `r nrow(mci_baseline_amyloid)` participants, `r nrow(filter(mci_baseline_amyloid, apoe4=="Non_carrier")) ` are non_carriers which `r nrow(filter(mci_baseline_amyloid, sex=="Female"& apoe4=="Non_carrier")) / nrow(filter(mci_baseline_amyloid, apoe4=="Non_carrier")) * 100` % of them are females and `r nrow(filter(mci_baseline_amyloid, sex=="Male"& apoe4=="Non_carrier")) / nrow(filter(mci_baseline_amyloid, apoe4=="Non_carrier")) * 100` % of them are males.
+
