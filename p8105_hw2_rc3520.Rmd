@@ -87,9 +87,11 @@ mr_trash_wheel = read_excel("./data/202309 Trash Wheel Collection Data.xlsx",
   drop_na() %>%
   mutate(
     sports_balls = as.integer(round(sports_balls)), 
-    year = as.numeric(year), 
+    year = as.integer(year), 
     dumpster = as.numeric(dumpster), 
-    homes_powered = as.integer(round(homes_powered, digits = 0))) 
+    homes_powered = as.integer(round(homes_powered, digits = 0)),
+    catg = "mr trash wheel") %>%
+  select(catg, everything())
 mr_trash_wheel
 ```
 
@@ -100,7 +102,9 @@ professor_trash_wheel = read_excel("./data/202309 Trash Wheel Collection Data.xl
                         janitor::clean_names() %>%
                         drop_na(dumpster) %>%
                         mutate(homes_powered = as.integer(round(homes_powered, digits = 0)),
-                          year=as.integer(year))
+                          year=as.integer(year),
+                          catg = "prof trash wheel") %>%
+  select(catg, everything())
 professor_trash_wheel
 ```
 
@@ -111,7 +115,9 @@ gwynnda = read_excel("./data/202309 Trash Wheel Collection Data.xlsx",
                         janitor::clean_names() %>%
                         drop_na(dumpster) %>%
                         mutate(homes_powered = as.integer(round(homes_powered, digits = 0)),
-                          year=as.integer(year))
+                          year=as.integer(year),
+                          catg = "gwynnda trash wheel") %>%
+  select(catg, everything())
 gwynnda
 ```
 
