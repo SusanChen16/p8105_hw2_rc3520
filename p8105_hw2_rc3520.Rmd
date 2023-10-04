@@ -159,7 +159,7 @@ The total number of cigarette butts collected by Gwynnda in July of 2021 is `r g
   select(cigarette_butts)%>%
   colSums()`
   
-# Question 3
+# Problem 3
 ##Import, clean, and tidy the dataset of mci_baseline 
 ```{r}
 mci_baseline =
@@ -180,8 +180,14 @@ After importing the data, I tidy the variable names by using 'janitor::clean_nam
 ### `r nrow(filter(mci_baseline_df, sex=="Female"& apoe4=="Carrier")) / nrow(filter(mci_baseline, sex== "Female")) * 100` % of women in the study are APOE4 carriers.
 
 
-
+##Import, clean, and tidy the dataset of mci_amyloid 
 ```{r}
-
+mci_amyloid =
+  read_csv("./data/mci_amyloid.csv", skip = 1) %>% 
+  janitor::clean_names() %>%
+  rename(id = study_id)
+mci_amyloid
 ```
+##Description:
+After importing the data with read_csv, I tidy the variable names by using janitor::clean_names and deleting the first line(description on the variables) by using skip. I also use rename to change the column name "study_id" to "id" so that it can be further match to the column name in mci_baseline.There are `r nrow(mci_amyloid)` people enrolled in this study.
 
