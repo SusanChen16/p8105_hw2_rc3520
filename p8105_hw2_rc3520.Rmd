@@ -148,13 +148,27 @@ mr_prof_gwynnda_trash_wheel
 ```
 
 ##Description about the datasets
-mr_trash_wheel includes 584 observations and 9 variables.
-professor_trash_wheel includes 106 observations and 14 variables.
+mr_trash_wheel includes `r nrow(mr_trash_wheel)` observations and `r ncol(mr_trash_wheel)`variables.Key variables include year, month, dumpster and weight.
+professor_trash_wheel includes `r nrow(professor_trash_wheel)`  observations and  `r ncol(professor_trash_wheel)` variables. Key variables include year, month, dumpster and weight.
 The total weight of trash collected by Professor Trash Wheel is `r professor_trash_wheel %>%
   select(weight_tons) %>%
   colSums()` tons.
-gwynnda includes 155 observations and 13 variables.
+gwynnda includes  `r nrow(gwynnda)` observations and `r ncol(gwynnda)` variables. Key variables include year, month, dumpster, weight, and cigarette butts.
 The total number of cigarette butts collected by Gwynnda in July of 2021 is `r gwynnda %>%
   filter(year == "2021",month == "July")%>%
   select(cigarette_butts)%>%
   colSums()`
+  
+# Question 3
+##Import, clean, and tidy the dataset of mci_baseline 
+```{r}
+mci_baseline =
+  read_csv("./data/MCI_baseline.csv", skip = 1) %>% 
+  janitor::clean_names() %>%
+  mutate(
+    sex = case_match(sex, 1 ~ "Male",0 ~ "Female"),
+    apoe4 = case_match(apoe4, 1 ~ "Carrier", 0 ~ "Non_carrier")) %>% 
+  filter(is.na(age_at_onset)|age_at_onset>current_age)
+mci_baseline
+```
+
